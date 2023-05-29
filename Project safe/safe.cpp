@@ -1,6 +1,18 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "library.h"
 
 using namespace std;
+
+const string GRAY = "\033[90m";
+const string BLUE = "\033[94m";
+const string CYAN = "\033[96m";
+const string GREEN = "\033[92m";
+const string WARNING = "\033[93m";
+const string FAIL = "\033[91m";
+const string BOLD = "\033[1m";
+const string UNDERLINE = "\033[4m";
+const string ENDC = "\033[0m";
 
 void systemclear() {
   string clear = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
@@ -10,12 +22,13 @@ void systemclear() {
 
 void encrypt(string password, string key) {
     for (int i = 0; i < password.length(); i++) {
-        password[i] = password[i] ^ key[i % key.length()];
+        
+      password[i] = password[i] ^ key[i % key.length()];
     }
     ofstream outfile("password.txt");
     outfile << password << endl;
     outfile.close();
-    cout << "Пароль сохранен" << endl;
+    cout << BOLD << "Пароль сохранен" << endl;
 }
 
 void decrypt(string key) {
@@ -28,7 +41,7 @@ void decrypt(string key) {
 
 void deletepass(vector<string> &passwordss, vector<string> &nameee, vector<string> &loginnn) {
   long long unsigned int index;
-  cout << "Введите номер пароля, который нужно удалить: ";
+  cout << BOLD << "Введите номер пароля, который нужно удалить: ";
   cin >> index;
   cin.ignore();
   if ((index >= 1 && index <= passwordss.size()) && (index >= 1 && index <= nameee.size()) && (index >= 1 && index <= loginnn.size())) {
@@ -55,18 +68,18 @@ void deletepass(vector<string> &passwordss, vector<string> &nameee, vector<strin
       file.close();
       file2.close();
       file3.close();
-      cout << "Пароль удален из файла.\n";
+      cout << BOLD << "Пароль удален из файла.\n";
     } else {
-      cerr << "Ошибка при открытии файла.\n";
+      cerr << BOLD << FAIL << "Ошибка при открытии файла.\n" << ENDC;
     }
   } else {
-    cerr << "Неверный номер пароля.\n";
+    cerr << BOLD << FAIL << "Неверный номер пароля.\n" << ENDC;
   }
 }
 
 void viewAllPasswords() {
   string key;
-  cout << "Введите ключ-пароль: ";
+  cout << BOLD << "Введите ключ-пароль: ";
   cin >> key;
   ifstream inputFile("passwords.txt"); // открытие файла для чтения
   ifstream inputFile2("name.txt");
@@ -76,7 +89,7 @@ void viewAllPasswords() {
   if (inputFile.is_open()) { // проверка, открыт ли файл
     int cntr = 1;
     
-    while (getline(inputFile, line), getline(inputFile2, line2), getline(inputFile3, line3)) { // считывание строк из файла
+    while (getline(inputFile, line), getline(inputFile2, line2), getline(inputFile3, line3)) { // считывание строк из файлов
       
 
     for (int i = 0; i < line.length(); i++) {
@@ -91,20 +104,20 @@ void viewAllPasswords() {
     inputFile2.close();
     inputFile3.close();
   } else {
-    cout << "Не удалось открыть файл"
+    cout << BOLD << FAIL <<"Не удалось открыть файл" << ENDC
          << endl; // вывод сообщения об ошибке, если файл не удалось открыть
   }
 }
 
 void addPassword() {
   string name, password, login, key;
-  cout << "Введите имя: ";
+  cout << BOLD << "Введите имя: ";
   cin >> name;
-  cout << "Введите логин: ";
+  cout << BOLD << "Введите логин: ";
   cin >> login;
-  cout << "Введите пароль: ";
+  cout << BOLD << "Введите пароль: ";
   cin >> password;
-  cout << "Введите ключ-пароль: ";
+  cout << BOLD << "Введите ключ-пароль: ";
   cin >> key;
 
   for (int i = 0; i < password.length(); i++) {
@@ -119,7 +132,7 @@ void addPassword() {
       outfile.close();
       outfile2.close();
       outfile3.close();
-      cout << "Пароль сохранен." << endl;
+      cout << BOLD << "Пароль сохранен." << endl;
 
 }
 
@@ -155,42 +168,42 @@ string generatePassword(string a) {
 
 void header() {
 
-  cout << "/‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\" << endl;
-  cout << "| " << setw(46) << left << "Выберите действие:"
-       << " |" << endl;
+  cout << BOLD << CYAN << "/‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\" << endl;
+  cout << "| " << GRAY << BOLD << setw(46) << left << "Выберите действие:"
+       << ENDC << BOLD << CYAN << " |" << endl;
   cout << "|--------------------------------|" << endl;
+  cout << BOLD << CYAN << "| "
+       << GREEN << BOLD << "1." << ENDC
+       << BOLD << CYAN << "| " << WARNING << BOLD << setw(26) << left << "Добавление пароля в список"
+       << ENDC << BOLD << CYAN << " |" << endl;
+  cout << "|---|----------------------------|" << endl;
+  cout << BOLD << CYAN << "| "
+       << GREEN << BOLD << "2." << ENDC
+       << BOLD << CYAN << "| " << WARNING << BOLD << setw(26) << left << "Создание рандомного пароля"
+       << ENDC << BOLD << CYAN << " |" << endl;
+  cout << BOLD << CYAN << "|---|----------------------------|" << endl;
   cout << "| "
-       << "1."
-       << "| " << setw(26) << left << "Добавление пароля в список"
-       << " |" << endl;
+       << GREEN << BOLD << "3." << ENDC
+       << BOLD << CYAN << "| " << WARNING << BOLD << setw(31) << left << "Генерация пароля по ключу"
+       << ENDC << BOLD << CYAN << "  |" << endl;
   cout << "|---|----------------------------|" << endl;
   cout << "| "
-       << "2."
-       << "| " << setw(26) << left << "Создание рандомного пароля"
-       << " |" << endl;
+       << GREEN << BOLD << "4." << ENDC
+       << BOLD << CYAN << "| " << WARNING << BOLD << setw(44) << left << "Вывод списка паролей"
+       << ENDC << BOLD << CYAN << " |" << endl;
   cout << "|---|----------------------------|" << endl;
   cout << "| "
-       << "3."
-       << "| " << setw(31) << left << "Генерация пароля по ключу"
-       << "  |" << endl;
+       << GREEN << BOLD << "5." << ENDC
+       << BOLD << CYAN << "| " << WARNING << BOLD << setw(40) << left << "Удаление пароля"
+       << ENDC << BOLD << CYAN << " |" << endl;
   cout << "|---|----------------------------|" << endl;
   cout << "| "
-       << "4."
-       << "| " << setw(44) << left << "Вывод списка паролей"
-       << " |" << endl;
-  cout << "|---|----------------------------|" << endl;
-  cout << "| "
-       << "5."
-       << "| " << setw(40) << left << "Удаление пароля"
-       << " |" << endl;
-  cout << "|---|----------------------------|" << endl;
-  cout << "| "
-       << "6."
-       << "| " << setw(31) << left << "Выход"
-       << " |" << endl;
-  cout << "\\--------------------------------/" << endl << endl;
+       << GREEN << BOLD << "6." << ENDC
+       << BOLD << CYAN << "| " << WARNING << BOLD << setw(31) << left << "Выход"
+       << ENDC << BOLD << CYAN << " |" << endl;
+  cout << "\\--------------------------------/" << ENDC << endl << endl;
 
-  cout << "Ваш выбор - ";
+  cout << BOLD << "Ваш выбор - " << ENDC;
 }
 
 int main() {
@@ -265,62 +278,101 @@ int main() {
     cout << "\n";
     if (choice == 1) {
       addPassword();
+            int choice1;
+      cout << endl << endl << "Желаете продолжить ?\n1. Да\n2. Нет\n\nВаш выбор: ";
+      cin >> choice1;
+      if(choice1 == 1) system("clear");
+      else if(choice1 == 2) break;
+      else       
+      cout << BOLD << FAIL << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
       this_thread::sleep_for(chrono::milliseconds(5000));
-      systemclear();
+      system("clear");
     } else if (choice == 2) {
       // Создание рандомного пароля
       string password = generateRandPass(16);
-      cout << "/---------------------------------------------\\" << endl;
+      cout << BOLD << "/---------------------------------------------\\" << endl;
       cout << "|  "
-           << "Сгенерированный пароль : " << password << "  |" << endl;
-      cout << "\\---------------------------------------------/" << endl;
+           << BOLD << CYAN << "Сгенерированный пароль : " << BOLD << GREEN << password << ENDC << BOLD << "  |" << endl;
+      cout << "\\---------------------------------------------/" << ENDC << endl;
+
+      int choice1;
+      cout << endl << endl << "Желаете продолжить ?\n1. Да\n2. Нет\n\nВаш выбор: ";
+      cin >> choice1;
+      if(choice1 == 1) system("clear");
+      else if(choice1 == 2) break;
+      else {
+      cout << BOLD << FAIL << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
       this_thread::sleep_for(chrono::milliseconds(5000));
-      systemclear();
+      }
     } else if (choice == 3) {
       const int SIZE = 100;
       char str[SIZE];
 
-      cout << "Пожалуйста, введите слово-ключ:\n";
+      cout << BOLD << "Пожалуйста, введите слово-ключ:\n";
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
       cin.get(str, SIZE);
-      cout << "Ваше слово-ключ: " << str << endl;
+      cout << BOLD << "Ваше слово-ключ: " << BOLD << GREEN << str << ENDC << endl;
 
       string sha256 = SHA256(str); // Хэш
       cout << sha256 << endl;
 
       string password = generatePassword(sha256);
-      cout << "Хэш: " << sha256;
-      cout << endl;
-      cout << "Пароль: " << password << endl;
+      cout << BOLD << BLUE << "Хэш: " << sha256;
+      cout << ENDC << endl;
+      cout << BOLD << CYAN << "Пароль: " << BOLD << GREEN << password << endl;
+      
+      int choice1;
+      cout << endl << endl << "Желаете продолжить ?\n1. Да\n2. Нет\n\nВаш выбор: ";
+      cin >> choice1;
+      if(choice1 == 1) system("clear");
+      else if(choice1 == 2) break;
+      else       
+      cout << BOLD << FAIL << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
       this_thread::sleep_for(chrono::milliseconds(5000));
-      systemclear();
+      system("clear");
     } else if (choice == 4) {
-      cout << "Формат: Имя - Логин - Пароль" << endl;
+      cout << BOLD << "Формат: Имя - Логин - Пароль" << endl;
       viewAllPasswords();
+      
+      int choice1;
+      cout << endl << endl << "Желаете продолжить ?\n1. Да\n2. Нет\n\nВаш выбор: ";
+      cin >> choice1;
+      if(choice1 == 1) system("clear");
+      else if(choice1 == 2) break;
+      else       
+      cout << BOLD << FAIL << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
       this_thread::sleep_for(chrono::milliseconds(5000));
-      systemclear();
+      system("clear");
     } else if (choice == 5) {
-      cout << "Формат: Имя - Логин - Пароль" << endl;
+      cout << BOLD << "Формат: Имя - Логин - Пароль" << endl;
       viewAllPasswords();
       deletepass(passwordss, nameee, loginnn);
+      
+      int choice1;
+      cout << endl << endl << "Желаете продолжить ?\n1. Да\n2. Нет\n\nВаш выбор: ";
+      cin >> choice1;
+      if(choice1 == 1) system("clear");
+      else if(choice1 == 2) break;
+      else       
+      cout << BOLD << FAIL << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
       this_thread::sleep_for(chrono::milliseconds(5000));
-      systemclear();
+      system("clear");
     } else if (choice == 6) {
       // Выход
       break;
     } else if (choice == 9) {
-      cout << " /‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\" << endl;
+      cout << BOLD << " /‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\" << endl;
       cout << "|  Проект по C++                     ==SAFE==     |" << endl;
       cout << "|  Автор: Ягольник Даниил Сергеевич               |" << endl;
       cout << "|  Ученик Школа::Кода 22/23 C++                   |" << endl;
       cout << "|  Преподаватель: Зверев Алексей Евгеньевич       |" << endl;
-      cout << " \\_______________________________________________/" << endl;
+      cout << " \\_______________________________________________/" << ENDC << endl;
       this_thread::sleep_for(chrono::milliseconds(10000));
-      systemclear();
+      system("clear");
     } else {
-      cout << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
-      this_thread::sleep_for(chrono::milliseconds(50000));
-      systemclear();
+      cout << BOLD << FAIL << "Некорректный выбор, попробуйте еще раз через 5 секунд" << endl;
+      this_thread::sleep_for(chrono::milliseconds(5000));
+      system("clear");
     }
   }
 

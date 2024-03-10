@@ -7,7 +7,7 @@
 ---
 ### :eyes: Follow me: 
 
-<div id="badges" align="right">
+<div id="badges" align="left">
   <a href="https://vk.com/denandyou">
     <img src="https://img.shields.io/badge/Vkontakte-blue?logo=VK&logoColor=white&style=for-the-badge"/>
   </a>
@@ -15,10 +15,10 @@
     <img src="https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white" alt="Youtube Badge"/>
   </a>
   <a href="https://t.me/Alwaysxdroll">
-    <img src="https://img.shields.io/badge/Telegram-blue?style=for-the-badge&logo=telegram&logoColor=white" alt="Twitter Badge"/>
+    <img src="https://img.shields.io/badge/Telegram-blue?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Badge"/>
   </a>
   <a href="mailto:stringdeity@gmail.com">
-    <img src="https://img.shields.io/badge/Telegram-blue?style=for-the-badge&logo=telegram&logoColor=white" alt="Twitter Badge"/>
-  </a>
+    <img src="https://img.shields.io/badge/Gmail-gray?style=for-the-badge&logo=gmail&logoColor=red" alt="Gmail Badge"/>
+</a>
   
 </div>
